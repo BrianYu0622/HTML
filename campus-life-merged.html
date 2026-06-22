@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="中國科技大學校園生活指引：附近餐廳、捷運、公車、停車與宿舍資訊。">
+    <title>中國科技大學｜校園生活指引</title>
+    <style>
+        /* ========== Design tokens ========== */
+        :root {
+            --bg: #f1f5f9;
+            --bg-elevated: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --brand: #1d4ed8;
+            --brand-soft: rgba(29, 78, 216, 0.12);
+            --accent: #0ea5e9;
+            --border: rgba(15, 23, 42, 0.08);
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.12);
+            --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei",
+                "PingFang TC", "Noto Sans TC", sans-serif;
+            --header-h: 3.5rem;
+            --tap-min: 44px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: var(--font);
+            color: var(--text);
+            background:
+                radial-gradient(1200px 600px at 10% -10%, rgba(14, 165, 233, 0.18), transparent 55%),
+                radial-gradient(900px 500px at 100% 0%, rgba(29, 78, 216, 0.14), transparent 50%),
+                var(--bg);
+            line-height: 1.6;
+        }
+
+        /* ========== 版面骨架 ========== */
+        .page-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem clamp(0.75rem, 3vw, 1.5rem) 3.5rem;
+        }
+
+        /* ========== 頁首：sticky；內嵌功能選單不另佔一列 ========== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.35rem;
+            min-height: var(--header-h);
+            padding: 0.55rem 3.75rem 0.55rem 0.65rem;
+            color: #fff;
+            background: linear-gradient(105deg, #0f172a 0%, #1e3a8a 42%, #2563eb 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: var(--shadow-md);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .header-section-select,
+        .header-balance {
+            width: min(11rem, 38vw);
+            flex-shrink: 0;
+        }
+
+        .header-balance {
+            height: 2.35rem;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .header-section-select {
+            margin: 0;
+            min-height: 2.35rem;
+            padding: 0.3rem 1.85rem 0.3rem 0.65rem;
+            font-family: inherit;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #fff;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: rgba(255, 255, 255, 0.14);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.45rem center;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: var(--radius-full);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-section-select option {
+            color: #0f172a;
+            background: #fff;
+        }
+
+        .header-section-select:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        .site-header-brand {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            max-width: min(52vw, 14rem);
+            font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* ========== 漢堡：浮動、符合觸控尺寸 ========== */
+        .hamburger-icon {
+            position: fixed;
+            top: calc((var(--header-h) - var(--tap-min)) / 2 + 0.15rem);
+            right: clamp(0.65rem, 2vw, 1rem);
+            z-index: 120;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--tap-min);
+            height: var(--tap-min);
+            margin: 0;
+            padding: 0;
+            font-size: 1.35rem;
+            line-height: 1;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            background: var(--bg-elevated);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+        }
+
+        .hamburger-icon:hover {
+            background: #f8fafc;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hamburger-icon:active {
+            transform: scale(0.97);
+        }
+
+        .hamburger-icon:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 3px;
+        }
+
+        /* ========== 全螢幕導覽（保留 width 切換以相容既有 JS）========== */
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 200;
+            top: 0;
+            left: 0;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            padding: 2rem 1.25rem;
+            text-align: left;
+            transform: translateY(-50%);
+        }
+
+        .overlay a:not(.close-btn) {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0.35rem 0;
+            padding: 0.85rem 1rem;
+            text-decoration: none;
+            font-size: clamp(1.05rem, 3.5vw, 1.2rem);
+            font-weight: 600;
+            color: #e2e8f0;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .overlay a:not(.close-btn)::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .overlay a:not(.close-btn):hover,
+        .overlay a:not(.close-btn):focus-visible {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .overlay a:not(.close-btn):hover::before,
+        .overlay a:not(.close-btn):focus-visible::before {
+            opacity: 1;
+        }
+
+        .overlay .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--tap-min);
+            height: var(--tap-min);
+            font-size: 1.75rem;
+            line-height: 1;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .overlay .close-btn:hover,
+        .overlay .close-btn:focus-visible {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* ========== 內容區 ========== */
+        .content-section {
+            display: none;
+            width: 100%;
+            margin-top: 1.5rem;
+            padding-bottom: 2rem;
+            text-align: center;
+            animation: section-in 0.35s ease both;
+        }
+
+        @keyframes section-in {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section iframe {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* ========== 首頁（預設） ========== */
+        .home-hero {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: clamp(1.1rem, 3vw, 1.8rem);
+            text-align: left;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background:
+                linear-gradient(120deg, rgba(29, 78, 216, 0.12), rgba(14, 165, 233, 0.08)),
+                var(--bg-elevated);
+            box-shadow: var(--shadow-md);
+        }
+
+        .home-badge {
+            display: inline-block;
+            margin: 0 0 0.65rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(29, 78, 216, 0.25);
+        }
+
+        .home-title {
+            margin: 0;
+            font-size: clamp(1.45rem, 4vw, 2rem);
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .home-subtitle {
+            margin: 0.7rem 0 0;
+            font-size: 0.94rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            max-width: 65ch;
+        }
+
+        .home-grid {
+            max-width: 960px;
+            margin: 1rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+            gap: 0.75rem;
+        }
+
+        .home-link {
+            display: block;
+            padding: 0.85rem 0.9rem;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+
+        .home-link:hover,
+        .home-link:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(29, 78, 216, 0.35);
+        }
+
+        .home-link strong {
+            display: block;
+            margin-bottom: 0.2rem;
+            font-size: 0.92rem;
+        }
+
+        .home-link span {
+            font-size: 0.8rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        /* ========== 餐廳 ========== */
+        #restaurant-info .restaurant-title {
+            margin: 0 0 0.25rem;
+            font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .category-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            align-items: center;
+            margin: 1.15rem 0 0.75rem;
+            padding: 0.35rem;
+            max-width: 42rem;
+            margin-inline: auto;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cat-btn {
+            flex: 0 1 auto;
+            min-height: 2.5rem;
+            padding: 0.4rem 1rem;
+            margin: 0;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-full);
+            transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cat-btn:hover {
+            color: var(--text);
+            background: rgba(15, 23, 42, 0.05);
+        }
+
+        .cat-btn.active {
+            color: #fff;
+            background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+            box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+        }
+
+        .cat-btn:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 2px;
+        }
+
+        .category-count {
+            margin: 0 0 1.25rem;
+            min-height: 1.5em;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        #restaurant-info a.card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border-radius: var(--radius-lg);
+            transition: transform 0.2s ease;
+        }
+
+        #restaurant-info a.card-link:focus-visible {
+            outline: 2px solid var(--brand);
+            outline-offset: 4px;
+        }
+
+        #restaurant-info .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+            gap: clamp(1rem, 2.5vw, 1.35rem);
+            padding: 0.25rem 0 0;
+            max-width: 1120px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        #restaurant-info .card {
+            height: 100%;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+        }
+
+        #restaurant-info a.card-link:hover .card {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        #restaurant-info .card-photo-wrap {
+            display: flex;
+            gap: 4px;
+            height: clamp(180px, 32vw, 220px);
+            padding: 4px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #e2e8f0, #f1f5f9);
+        }
+
+        #restaurant-info .card-multi-image {
+            flex: 1;
+            width: 0;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+        }
+
+        #restaurant-info .card-info {
+            padding: 1rem 1.1rem 1.15rem;
+        }
+
+        #restaurant-info .card-info h3 {
+            margin: 0 0 0.35rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        #restaurant-info .card-info p {
+            margin: 0;
+            font-size: 0.875rem;
+            line-height: 1.55;
+            color: var(--text-muted);
+        }
+
+        /* ========== 地圖／交通共用 ========== */
+        .map-panel-inner,
+        .bus-panel-inner,
+        .parking-panel-inner {
+            max-width: 52rem;
+            margin-inline: auto;
+            text-align: left;
+        }
+
+        .parking-panel-inner {
+            padding: 0.25rem 0 1rem;
+        }
+
+        .map-section-title {
+            margin: 0 0 1rem;
+            font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .embed-map-ratio {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            background: #e2e8f0;
+        }
+
+        .embed-map-ratio iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .map-note {
+            margin: 1rem 0 0;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* ========== 公車 ========== */
+        .bus-heading {
+            margin: 0 0 1rem;
+            padding: 0;
+            font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .bus-stop-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .bus-stop-card {
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            line-height: 1.55;
+        }
+
+        .bus-stop-card small {
+            display: inline-block;
+            margin-top: 0.35rem;
+            color: var(--text-muted);
+        }
+
+        .bus-stop-card--red {
+            background: linear-gradient(135deg, #fef2f2, #fff7ed);
+            border-color: rgba(248, 113, 113, 0.35);
+        }
+
+        .bus-stop-card--red strong {
+            color: #b91c1c;
+        }
+
+        .bus-stop-card--blue {
+            background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        .bus-stop-card--blue strong {
+            color: #1d4ed8;
+        }
+
+        .embed-map-frame {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            background: #e2e8f0;
+        }
+
+        .embed-map-frame iframe {
+            display: block;
+            width: 100%;
+        }
+
+        .bus-map-legend {
+            margin: 0 0 0.75rem;
+            padding: 0.7rem 0.95rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.55;
+            color: var(--text);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .bus-map-legend .bus-legend-marker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-right: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .bus-dot {
+            flex-shrink: 0;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.2);
+        }
+
+        .bus-dot--red {
+            background: #dc2626;
+        }
+
+        .bus-dot--blue {
+            background: #2563eb;
+        }
+
+        /* Google 地圖：兩站分圖 + 總覽 */
+        .bus-google-maps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .bus-map-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .bus-map-cell-label {
+            margin: 0;
+            padding: 0.45rem 0.65rem;
+            font-size: 0.8125rem;
+            font-weight: 800;
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--border);
+            background: var(--bg-elevated);
+        }
+
+        .bus-map-cell-label--red {
+            border-left-color: #dc2626;
+            color: #991b1b;
+        }
+
+        .bus-map-cell-label--blue {
+            border-left-color: #2563eb;
+            color: #1e40af;
+        }
+
+        .bus-map-cell-label--neutral {
+            border-left-color: #64748b;
+            color: var(--text);
+        }
+
+        .embed-map-ratio--bus {
+            max-width: none;
+            aspect-ratio: 4 / 3;
+        }
+
+        .bus-map-overview-block {
+            margin-bottom: 0.5rem;
+        }
+
+        .bus-google-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.8125rem;
+        }
+
+        .bus-google-links a {
+            color: var(--brand);
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .bus-google-links a:hover {
+            text-decoration-thickness: 2px;
+        }
+
+        .bus-hint {
+            margin-top: 0.85rem;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ========== 停車 ========== */
+        .parking-title {
+            margin: 0 0 1rem;
+            padding-bottom: 0.65rem;
+            font-size: clamp(1.2rem, 3vw, 1.45rem);
+            font-weight: 800;
+            color: var(--text);
+            border-bottom: 2px solid rgba(29, 78, 216, 0.25);
+        }
+
+        .parking-card {
+            margin-bottom: 1.25rem;
+            padding: 1.25rem 1.35rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .parking-subtitle {
+            margin: 0 0 1rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .fee-table thead tr {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: #fff;
+        }
+
+        .fee-table th,
+        .fee-table td {
+            padding: 0.75rem 0.85rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .fee-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .fee-table tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .fee-cell-strong {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .fee-cell-price--green {
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        .fee-cell-price--red {
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        .fee-cell-muted {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .parking-notice {
+            padding: 1rem 1.1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            background: linear-gradient(135deg, #fffbeb, #fff7ed);
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+
+        .parking-notice ul {
+            margin: 0.5rem 0 0;
+            padding-left: 1.15rem;
+        }
+
+        .offsite-parking-title {
+            margin: 1.1rem 0 0.75rem;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .offsite-parking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .offsite-parking-item {
+            padding: 0.85rem 0.95rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: #f8fafc;
+        }
+
+        .offsite-parking-item h4 {
+            margin: 0 0 0.35rem;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .offsite-parking-item p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .offsite-parking-item a {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--brand);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .offsite-parking-section {
+            margin-top: 1.1rem;
+            padding: 1.15rem 1.2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .offsite-parking-lead {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .offsite-parking-map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .offsite-parking-map-grid .embed-map-ratio {
+            max-width: none;
+            aspect-ratio: 4 / 3;
+        }
+
+        /* ========== 宿舍相簿 ========== */
+        .dorm-gallery {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.1rem;
+            max-width: 980px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .dorm-heading {
+            margin: 0;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .dorm-intro {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .dorm-card {
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dorm-card h3 {
+            margin: 0 0 0.45rem;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .dorm-card p {
+            margin: 0 0 0.75rem;
+            font-size: 0.86rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .dorm-list {
+            margin: 0;
+            padding-left: 1.1rem;
+            color: var(--text-muted);
+            font-size: 0.86rem;
+            line-height: 1.65;
+        }
+
+        .dorm-list li+li {
+            margin-top: 0.35rem;
+        }
+
+        .dorm-source-links {
+            margin-top: 0.75rem;
+            padding-top: 0.65rem;
+            border-top: 1px dashed var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem 0.7rem;
+            font-size: 0.82rem;
+        }
+
+        .dorm-source-links a {
+            color: var(--brand);
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .dorm-map-wrap {
+            margin-bottom: 0.75rem;
+        }
+
+        .dorm-map-wrap .embed-map-ratio {
+            max-width: none;
+            aspect-ratio: 4 / 3;
+        }
+
+        .dorm-photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.55rem;
+        }
+
+        .dorm-photos img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        .dorm-map-link {
+            display: inline-block;
+            margin-top: 0.2rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--brand);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        @media (min-width: 860px) {
+            .dorm-gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                align-items: start;
+            }
+
+            .dorm-heading,
+            .dorm-intro {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* ========== 頁尾 ========== */
+        .site-footer {
+            margin-top: auto;
+            padding: 1.5rem 1rem 2.25rem;
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(8px);
+        }
+
+        .site-footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 頁首：學校名稱 + 內嵌功能切換（不另加一列工具列） -->
+    <header class="site-header">
+        <label class="visually-hidden" for="section-select">切換功能區塊</label>
+        <select id="section-select" class="header-section-select" aria-label="切換功能區塊">
+            <option value="home">首頁</option>
+            <option value="restaurant-info">附近餐廳</option>
+            <option value="MRT">捷運</option>
+            <option value="route-map">公車站</option>
+            <option value="carapark">停車場</option>
+            <option value="transactions">學校宿舍</option>
+        </select>
+        <p class="site-header-brand">中國科技大學</p>
+        <span class="header-balance" aria-hidden="true"></span>
+    </header>
+
+    <!-- ===== 主內容區（<main>）：依功能分區，同一頁切換顯示 ===== -->
+    <main class="page-main">
+
+        <!-- 區塊零：首頁（預設顯示） -->
+        <section id="home" class="content-section" style="display:none;">
+            <div class="home-hero">
+                <p class="home-badge">CUTE Taipei Campus</p>
+                <h2 class="home-title">中國科技大學 校園生活導覽首頁</h2>
+                <p class="home-subtitle">
+                    一頁快速查看校園周邊生活資訊：餐廳、捷運、公車、停車與宿舍建議。
+                    下方可直接點擊進入各功能區塊，適合新生與訪客快速查找。
+                </p>
+            </div>
+
+            <div class="home-grid">
+                <a class="home-link" href="#" onclick="showSection('restaurant-info'); return false;">
+                    <strong>🍽 附近餐廳</strong>
+                    <span>依早餐、正餐與飲料快速篩選。</span>
+                </a>
+                <a class="home-link" href="#" onclick="showSection('MRT'); return false;">
+                    <strong>🚇 捷運資訊</strong>
+                    <span>查看最近捷運站與通行方式。</span>
+                </a>
+                <a class="home-link" href="#" onclick="showSection('route-map'); return false;">
+                    <strong>🚌 公車站</strong>
+                    <span>校門周邊站位與地圖總覽。</span>
+                </a>
+                <a class="home-link" href="#" onclick="showSection('carapark'); return false;">
+                    <strong>🚗 停車場</strong>
+                    <span>校內外停車費率與位置整理。</span>
+                </a>
+                <a class="home-link" href="#" onclick="showSection('transactions'); return false;">
+                    <strong>🏠 宿舍資訊</strong>
+                    <span>校內宿舍與校外租屋重點。</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 區塊一：附近餐廳（分類篩選 + 卡片連至 Google Maps 地點；圖檔見根目錄 images/，檔名與副檔名請與該資料夾一致） -->
+        <section id="restaurant-info" class="content-section" style="display:none;">
+            <h2 class="restaurant-title">推薦餐廳</h2>
+
+            <!-- 餐廳分類篩選按鈕 -->
+            <div class="category-menu">
+                <button type="button" class="cat-btn active" onclick="filterCategory('all', this)">全部</button>
+                <button type="button" class="cat-btn" onclick="filterCategory('breakfast', this)">🍳 早餐</button>
+                <button type="button" class="cat-btn" onclick="filterCategory('lunch', this)">🍱 正餐</button>
+                <button type="button" class="cat-btn" onclick="filterCategory('drink', this)">🥤 飲料</button>
+            </div>
+
+            <p id="category-count" class="category-count" aria-live="polite"></p>
+
+            <div class="card-container">
+
+            <!-- 第一間 -->
+            <a href="https://www.google.com/maps/place/%E8%8C%B6%E6%B0%B4%E9%96%93%E5%85%A8%E6%97%A5%E9%A4%90%E9%A3%B2/@24.9996589,121.5551899,21z/data=!4m6!3m5!1s0x3442aa13cb9382c7:0xbc7e92d762d55b48!8m2!3d24.9995726!4d121.5552507!16s%2Fg%2F12m9dk623" 
+            target="_blank" class="card-link breakfast lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/茶水間全日餐飲.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>茶水間全日餐飲</h3>
+                        <p>校門對面複合式早餐，三明治、鍋燒與日式炸物選擇多。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第二間 -->
+            <a href="https://www.google.com/maps/place/Lazy+Pasta+%E6%85%B5%E6%87%B6%E7%BE%A9%E5%BC%8F%E5%BB%9A%E6%88%BF%E6%96%87%E5%B1%B1%E8%90%AC%E8%8A%B3%E5%BA%97/@24.9995785,121.5550796,20z/data=!4m6!3m5!1s0x3442ab6b51aa3c0b:0x70338609362ed8de!8m2!3d24.9996669!4d121.5549707!16s%2Fg%2F11n958ssbh"
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/Lazy Pasta 慵懶義式廚房.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>Lazy Pasta 慵懶義式廚房</h3>
+                        <p>義大利麵、燉飯與炸物輕食，適合同窗小聚的平價義式館。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第三間 -->
+            <a href="https://www.google.com/maps/place/%E7%91%9E%E5%93%A5%E9%9B%9E%E8%82%89%E9%A3%AF%E4%B8%AD%E7%A7%91%E5%A4%A7%E5%BA%97/@24.99955,121.555291,21z/data=!4m6!3m5!1s0x3442ab3e0dd8bfcf:0xf65ec160d28af193!8m2!3d24.9994959!4d121.5554718!16s%2Fg%2F11xmvmdhj2" 
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/瑞哥雞肉飯中科大店.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>瑞哥雞肉飯中科大店</h3>
+                        <p>白飯淋上雞油與特製醬汁，配菜與份量適合當正餐。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第四間 -->
+            <a href="https://www.google.com/maps/place/%E7%A6%8E%E8%A8%98%E6%BB%B7%E5%91%B3%EF%BC%88%E4%B8%AD%E5%9C%8B%E7%A7%91%E5%A4%A7%E7%B8%BD%E5%BA%97%EF%BC%89/@24.9997135,121.5556766,21z/data=!4m6!3m5!1s0x3442aa13b6020949:0xfb10fa4f7669176b!8m2!3d24.9998387!4d121.5556873!16s%2Fg%2F11c5bq0tbq" 
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/禎記滷味（中國科大總店）.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>禎記滷味（中國科大總店）</h3>
+                        <p>校旁滷味老字號，海帶豆干與冬粉可任搭，晚餐宵夜都熱門。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第五間 -->
+            <a href="https://www.google.com/maps/place/%E9%BA%A5%E7%95%B6%E5%8B%9E-%E5%8F%B0%E5%8C%97%E8%88%88%E9%9A%86%E9%A4%90%E5%BB%B3/@25.00007,121.5559005,21z/data=!4m6!3m5!1s0x3442aa76b349e02f:0x948beddee4e6863b!8m2!3d25.0001732!4d121.5558422!16s%2Fg%2F1hc102hm6" 
+            target="_blank" class="card-link breakfast lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/麥當勞-台北興隆餐廳.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>麥當勞-台北興隆餐廳</h3>
+                        <p>國際速食連鎖，從早晨滿福堡到炸雞套餐，內用外帶都行。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第六間 -->
+            <a href="https://www.google.com/maps/place/%E6%91%A9%E6%96%AF%E6%BC%A2%E5%A0%A1-+%E8%88%88%E9%9A%86%E5%BA%97/@25.0002432,121.555691,21z/data=!4m6!3m5!1s0x3442aa13b8c27e23:0xf7e8a6b82a82d1ca!8m2!3d25.000261!4d121.5556421!16s%2Fg%2F1hc1jr0nr" 
+            target="_blank" class="card-link breakfast lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/摩斯漢堡- 興隆店.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>摩斯漢堡- 興隆店</h3>
+                        <p>現烤米漢堡與和風堡，蔬菜比例高、口味清爽。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第七間 -->
+            <a href="https://www.google.com/maps/place/CoCo%E9%83%BD%E5%8F%AF+%E8%88%88%E9%9A%86%E5%BA%97/@24.9999413,121.5558356,21z/data=!4m6!3m5!1s0x3442aa13b9575775:0x14934639026abe3f!8m2!3d25.000017!4d121.5557301!16s%2Fg%2F1tlqmp9_" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/CoCo都可 興隆店.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>CoCo都可 興隆店</h3>
+                        <p>老牌手搖連鎖，奶茶三兄弟與季節水果茶選擇穩定。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第8間 -->
+            <a href="https://www.google.com/maps/place/%E9%BA%BB%E5%8F%A4%E8%8C%B6%E5%9D%8A+%E8%90%AC%E8%8A%B3%E8%88%88%E9%9A%86%E5%BA%97/@24.9994745,121.5560387,20.25z/data=!4m6!3m5!1s0x3442ab3fda0aae21:0xdba066b41a284f3b!8m2!3d24.9993874!4d121.556183!16s%2Fg%2F11r_qmnknm" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/麻古茶坊 萬芳興隆店.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>麻古茶坊 萬芳興隆店</h3>
+                        <p>果粒茶與芝士奶蓋系列出名，當季水果冰沙很熱門。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第9間 -->
+            <a href="https://www.google.com/maps/place/%E8%BF%B7%E5%AE%A2%E5%A4%8F+%E8%87%BA%E5%8C%97%E8%88%88%E9%9A%86%E5%BA%97/@24.9989571,121.5570837,21z/data=!4m6!3m5!1s0x3442aa1255557a2f:0x396d433626d32752!8m2!3d24.9989303!4d121.556981!16s%2Fg%2F11btxhj263" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/迷客夏 臺北興隆店.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>迷客夏 臺北興隆店</h3>
+                        <p>標榜牧場鮮奶，綠光牧場系列與珍珠鮮奶茶討論度高。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第10間 -->
+            <a href="https://www.google.com/maps/place/UG%E5%8F%B0%E5%8C%97%E8%90%AC%E8%8A%B3%E5%BA%97/@24.998989,121.556979,17z/data=!4m6!3m5!1s0x3442ab005c3a2703:0xdb66ef103b39779f!8m2!3d24.998989!4d121.556979!16s%2Fg%2F11xtcq_ywh" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/UG.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>UG台北萬芳店</h3>
+                        <p>強調純茶與冷萃，茶湯濃淡與加料可細調。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第11間 -->
+            <a href="https://www.google.com/maps/place/%E5%BE%97%E6%AD%A3%23%E5%8F%B0%E5%8C%97%E8%90%AC%E8%8A%B3/@24.9988677,121.5578325,21z/data=!3m1!5s0x3442aa131dc7b64f:0x653d5e8c293da654!4m6!3m5!1s0x3442ab006f41407b:0xcdd210e6a5a316eb!8m2!3d24.9988306!4d121.5579149!16s%2Fg%2F11vt8vl9bg" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/得正＃台北萬芳.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>得正#台北萬芳</h3>
+                        <p>烏龍茶專門店，輕、中、重焙與拿鐵類搭配很有辨識度。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第12間 -->
+            <a href="https://www.google.com/maps/place/%E4%B8%80%E6%B2%90%E6%97%A5+%E6%96%87%E5%B1%B1%E8%88%88%E9%9A%86%E5%BA%97/@25.0004476,121.5552605,19z/data=!3m1!4b1!4m6!3m5!1s0x3442ab06e828bc19:0x71f37887d8ac6e48!8m2!3d25.0004464!4d121.5559042!16s%2Fg%2F11rvl_5b0z" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/一沐日 文山興隆店.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>一沐日 文山興隆店</h3>
+                        <p>粉粿、蕎麥等自家配料，茶湯與咀嚼口感層次豐富。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第13間 -->
+            <a href="https://www.google.com/maps/place/50%E5%B5%90+%E8%88%88%E9%9A%86%E5%BA%97/@25.0007954,121.5548898,19z/data=!4m6!3m5!1s0x346801de353f38d9:0x8c760b4ee37c0bb3!8m2!3d25.0009852!4d121.5545048!16s%2Fg%2F11xc27qx0" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/50嵐 興隆店.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>50嵐 興隆店</h3>
+                        <p>經典波霸奶茶與阿里山系列，糖量冰塊可細分。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第14間 -->
+            <a href="https://www.google.com/maps/place/%E5%85%88%E5%96%9D%E9%81%93/@25.0003138,121.5561076,20z/data=!4m6!3m5!1s0x3442ab0022edb71b:0x1e906e7663376b44!8m2!3d24.9999348!4d121.5562666!16s%2Fg%2F11wwsx1lm2" 
+            target="_blank" class="card-link drink">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/先喝道.png" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>先喝道</h3>
+                        <p>英式茶底調飲，水果與花香系茶飲風味清爽。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第15間 -->
+            <a href="https://www.google.com/maps/place/%E4%B8%89%E5%95%86%E5%B7%A7%E7%A6%8F+%E8%88%88%E9%9A%86%E9%96%80%E5%B8%82/@25.0001813,121.5557897,20z/data=!4m6!3m5!1s0x3442aa13bc52e31f:0xf4b68c27333a48bd!8m2!3d25.0003669!4d121.5560017!16s%2Fg%2F1tpf4vkj" 
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/三商巧福 興隆門市.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>三商巧福 興隆門市</h3>
+                        <p>牛肉麵連鎖湯頭濃，半筋半肉與牛腩麵是安全牌。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第16間 -->
+            <a href="https://www.google.com/maps/place/%E8%82%AF%E5%BE%B7%E5%9F%BA+%E6%96%87%E5%B1%B1%E8%88%88%E9%9A%86%E9%A4%90%E5%BB%B3/@25.0008916,121.5544996,19z/data=!4m6!3m5!1s0x3442aa13047a414d:0x5144f8bdb0c07c0f!8m2!3d25.0008915!4d121.5548936!16s%2Fg%2F1tsjbc5h" 
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/肯德基 文山興隆餐廳.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>肯德基 文山興隆餐廳</h3>
+                        <p>脆皮炸雞、蛋塔與漢堡套餐，速食聚餐與外帶都方便。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 第17間 -->
+            <a href="https://www.google.com/maps/place/%E7%A6%8F%E9%BC%8E%E6%B9%AF%E5%8C%85%E5%BA%97/@24.9993907,121.5562963,19.25z/data=!4m6!3m5!1s0x3442aa13ab1ea771:0xdec6b65dae9248d!8m2!3d24.9991357!4d121.5566605!16s%2Fg%2F1tfbw4g5" 
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/福鼎湯包店.jpg" class="card-multi-image">
+                    </div>
+                    <div class="card-info">
+                        <h3>福鼎湯包店</h3>
+                        <p>現蒸湯包與小點心，皮薄湯汁多，適合當正餐或加餐。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- SUBWAY（圖檔 subway.jpg）-->
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=SUBWAY+%E8%90%AC%E8%8A%B3%E5%BA%97+%E5%8F%B0%E5%8C%97%E5%B8%82%E6%96%87%E5%B1%B1%E5%8D%80%E8%88%88%E9%9A%86%E8%B7%AF%E4%B8%89%E6%AE%B549%E8%99%9F"
+            target="_blank" class="card-link breakfast lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/subway.jpg" class="card-multi-image" alt="">
+                    </div>
+                    <div class="card-info">
+                        <h3>SUBWAY 萬芳店</h3>
+                        <p>生菜、肉片與醬料自選潛艇堡，可走清爽或份量路線。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 老先覺即時鍋（圖檔 即時鍋.jpg）-->
+            <a href="https://www.google.com/maps/place/%E8%80%81%E5%85%88%E8%A6%BA%E5%8D%B3%E9%A3%9F%E9%8D%8B+%E5%8F%B0%E5%8C%97%E8%90%AC%E8%8A%B3%E5%BA%97/@24.999122,121.5565895,17z/data=!4m6!3m5!1s0x3442abbda7ef2579:0xa1beb4c0e1d0ca8a!8m2!3d24.999122!4d121.5565895!16s%2Fg%2F11vb2pqgs4"
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/即時鍋.jpg" class="card-multi-image" alt="">
+                    </div>
+                    <div class="card-info">
+                        <h3>老先覺即時鍋 台北萬芳店</h3>
+                        <p>個人涮涮鍋與香辣鍋底，一人一鍋、外帶也方便。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 小木屋鬆餅 -->
+            <a href="https://www.google.com/maps/place/11698%E5%8F%B0%E5%8C%97%E5%B8%82%E6%96%87%E5%B1%B1%E5%8D%80%E8%88%88%E9%9A%86%E8%B7%AF%E4%B8%89%E6%AE%B5168%E8%99%9F%E5%B0%8F%E6%9C%A8%E5%B1%8B%E9%AC%86%E9%A4%85+%E5%8F%B0%E5%8C%97%E8%90%AC%E8%8A%B3%E5%BA%97/data=!4m2!3m1!1s0x3442ab74004316d9:0xe935e2fff388633a"
+            target="_blank" class="card-link breakfast lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/小木屋鬆餅.jpg" class="card-multi-image" alt="">
+                    </div>
+                    <div class="card-info">
+                        <h3>小木屋鬆餅 台北萬芳店</h3>
+                        <p>現烤脆皮鬆餅夾餡，甜味與早午餐口味都有。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 福勝亭 興隆店 -->
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%A6%8F%E5%8B%9D%E4%BA%AD%20%E8%88%88%E9%9A%86%E5%BA%97%20%E8%88%88%E9%9A%86%E8%B7%AF%E4%B8%89%E6%AE%B555%E8%99%9F"
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/福勝亭.jpg" class="card-multi-image" alt="">
+                    </div>
+                    <div class="card-info">
+                        <h3>福勝亭 興隆店</h3>
+                        <p>日式炸豬排定食專門，高麗菜絲多半可續，咖喱與菇類配菜選擇多。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 西紅柿麵食 -->
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=%E8%A5%BF%E7%B4%85%E6%9F%BF%E9%BA%B5%E9%A3%9F%E5%BA%97%20%E8%88%88%E9%9A%86%E8%B7%AF%E4%B8%89%E6%AE%B5112%E5%B7%B72%E5%BC%842%E8%99%9F"
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/西紅柿麵食.jpg" class="card-multi-image" alt="">
+                    </div>
+                    <div class="card-info">
+                        <h3>西紅柿麵食店</h3>
+                        <p>紅燒牛肉麵與麵疙瘩份量大，牛筋牛腩與半筋半肉常排隊。</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 麵匡匡拉麵 -->
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%BA%B5%E5%8C%A1%E5%8C%A1%E6%8B%89%E9%BA%B5%E9%A3%9F%E5%A0%82%20%E5%8F%B0%E5%8C%97%E8%90%AC%E8%8A%B3%E5%BA%97%20%E8%88%88%E9%9A%86%E8%B7%AF%E4%B8%89%E6%AE%B5112%E5%B7%B72%E5%BC%846%E8%99%9F"
+            target="_blank" class="card-link lunch">
+                <div class="card">
+                    <div class="card-photo-wrap">
+                        <img src="images/麵匡匡.jpg" class="card-multi-image" alt="">
+                    </div>
+                    <div class="card-info">
+                        <h3>麵匡匡拉麵食堂 台北萬芳店</h3>
+                        <p>豚骨、味噌與創意蘸麵類，麵硬度可調的平價拉麵館。</p>
+                    </div>
+                </div>
+            </a>
+            </div>
+        </section>
+
+        <!-- 區塊二：捷運（萬芳醫院站 → 校區步行路線，響應式嵌入地圖） -->
+        <section id="MRT" class="content-section map-section" style="display:none;">
+            <div class="map-panel-inner">
+                <h3 class="map-section-title">萬芳醫院站 ➔ 中國科技大學(興隆路校門口)</h3>
+                <div class="embed-map-ratio">
+                    <iframe
+                        src="https://www.google.com/maps?saddr=24.9994093%2C121.5580505&amp;daddr=24.99925%2C121.55553&amp;hl=zh-TW&amp;dirflg=w&amp;output=embed"
+                        title="萬芳醫院站至中國科技大學(興隆路校門口)步行路線"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- 區塊三：公車（站牌路線摘要 + 校區周邊地圖） -->
+        <section id="route-map" class="content-section" style="display:none;">
+            <div class="bus-panel-inner">
+                <h4 class="bus-heading">🚌 公車站點位置標示</h4>
+                <div class="bus-stop-row">
+                    <div class="bus-stop-card bus-stop-card--red">
+                        <strong>📍 萬芳醫院站</strong><br>
+                        <small>236, 237, 253, 294, 295, 530, 611, 0南</small>
+                    </div>
+                    <div class="bus-stop-card bus-stop-card--blue">
+                        <strong>📍 中國科技大學站</strong><br>
+                        <small>棕2, 棕6, 棕11, 棕12, 綠2</small>
+                    </div>
+                </div>
+                <p class="bus-map-legend" role="note">
+                    <span class="bus-legend-marker"><span class="bus-dot bus-dot--red" aria-hidden="true"></span>①</span>萬芳醫院站（興隆路側站牌）　
+                    <span class="bus-legend-marker"><span class="bus-dot bus-dot--blue" aria-hidden="true"></span>②</span>中國科技大學站（興隆路三段56號校門口）<br>
+                    <span style="font-weight:500;color:var(--text-muted)">下方為 Google 地圖的站點位置，亦可點地圖「放大地圖」開啟完整版。</span>
+                </p>
+                <div class="bus-google-maps-grid">
+                    <div class="bus-map-cell">
+                        <p class="bus-map-cell-label bus-map-cell-label--red">① 萬芳醫院站（興隆路）</p>
+                        <div class="embed-map-ratio embed-map-ratio--bus">
+                            <iframe
+                                title="Google 地圖：萬芳醫院公車站（興隆路側）"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps?q=24.9995152%2C121.5570337&amp;z=17&amp;hl=zh-TW&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+                    <div class="bus-map-cell">
+                        <p class="bus-map-cell-label bus-map-cell-label--blue">② 中國科技大學站（興隆路校門口）</p>
+                        <div class="embed-map-ratio embed-map-ratio--bus">
+                            <iframe
+                                title="Google 地圖：中國科技大學校門口（興隆路）"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps?q=24.99925%2C121.55553&amp;z=18&amp;hl=zh-TW&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="bus-map-overview-block">
+                    <p class="bus-map-cell-label bus-map-cell-label--neutral">③ 總覽</p>
+                    <div class="embed-map-ratio embed-map-ratio--bus">
+                        <iframe
+                            title="Google 地圖：萬芳醫院公車站至中國科技大學公車站路線總覽"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps?saddr=24.9995152%2C121.5570337&amp;daddr=24.99925%2C121.55553&amp;hl=zh-TW&amp;dirflg=w&amp;output=embed"></iframe>
+                    </div>
+                </div>
+                <div class="bus-google-links">
+                    <a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%8D%B7%E9%81%8B%E8%90%AC%E8%8A%B3%E9%86%AB%E9%99%A2%E7%AB%99%20%E5%85%AC%E8%BB%8A%20%E8%88%88%E9%9A%86%E8%B7%AF" target="_blank" rel="noopener noreferrer">Google 地圖搜尋：捷運萬芳醫院站 公車</a>
+                    <a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B8%AD%E5%9C%8B%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%20%E8%88%88%E9%9A%86%E8%B7%AF%E4%B8%89%E6%AE%B556%E8%99%9F%20%E5%85%AC%E8%BB%8A%E7%AB%99" target="_blank" rel="noopener noreferrer">Google 地圖搜尋：中國科技大學（興隆路校門口）</a>
+                </div>
+                <p class="bus-hint">※ 嵌入地圖若與現場站牌略有偏差，請以站牌與上方「Google 地圖搜尋」連結為準。座標僅供縮放定位參考。</p>
+            </div>
+        </section>
+
+        <!-- 區塊四：停車（格致樓地下停車場費率與注意事項） -->
+        <section id="carapark" class="content-section" style="display:none;">
+            <div class="parking-panel-inner">
+                <h2 class="parking-title">🚗 校內停車資訊</h2>
+                <div class="parking-card">
+                    <h3 class="parking-subtitle">📍 格致樓地下停車場 (校內)</h3>
+                    <table class="fee-table">
+                        <thead>
+                            <tr>
+                                <th>車種</th>
+                                <th>收費標準</th>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fee-cell-strong">🛵 機車</td>
+                                <td class="fee-cell-price fee-cell-price--green">500 元 / 每學期</td>
+                                <td class="fee-cell-muted">需申請停車證</td>
+                            </tr>
+                            <tr>
+                                <td class="fee-cell-strong">🚘 汽車</td>
+                                <td class="fee-cell-price fee-cell-price--red">3000 元 / 每學期</td>
+                                <td class="fee-cell-muted">需申請停車證</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="parking-notice">
+                    <strong>※ 注意事項：</strong>
+                    <ul>
+                        <li>停車證申請請洽總務處相關單位。</li>
+                    </ul>
+                </div>
+
+                <section class="offsite-parking-section" aria-label="校外停車場資訊">
+                    <h3 class="offsite-parking-title">🏙️ 校外停車場</h3>
+                    <p class="offsite-parking-lead">以下為校外可參考停車點。</p>
+                    <div class="offsite-parking-grid">
+                        <article class="offsite-parking-item">
+                            <h4>ViVi PARK 中國科大停車場</h4>
+                            <p>位置靠近中國科技大學周邊，步行至校門口方便，適合作為臨停或短時停車備案。</p>
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=ViVi+PARK+%E4%B8%AD%E5%9C%8B%E7%A7%91%E5%A4%A7%E5%81%9C%E8%BB%8A%E5%A0%B4" target="_blank" rel="noopener noreferrer">Google 地圖查看</a>
+                        </article>
+                        <article class="offsite-parking-item">
+                            <h4>CITY PARKING 城市車旅停車場（萬芳醫院站）</h4>
+                            <p>位於萬芳醫院站一帶，適合作為校外停車替代方案，可再轉步行或搭乘大眾運輸進校。</p>
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=CITY+PARKING+%E5%9F%8E%E5%B8%82%E8%BB%8A%E6%97%85+%E8%90%AC%E8%8A%B3%E9%86%AB%E9%99%A2%E7%AB%99" target="_blank" rel="noopener noreferrer">Google 地圖查看</a>
+                        </article>
+                    </div>
+                    <div class="offsite-parking-map-grid">
+                        <div>
+                            <p class="bus-map-cell-label bus-map-cell-label--neutral">ViVi PARK 中國科大停車場</p>
+                            <div class="embed-map-ratio">
+                                <iframe title="Google 地圖：ViVi PARK 中國科大停車場" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps?q=ViVi+PARK+%E4%B8%AD%E5%9C%8B%E7%A7%91%E5%A4%A7%E5%81%9C%E8%BB%8A%E5%A0%B4&amp;hl=zh-TW&amp;z=17&amp;output=embed"></iframe>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="bus-map-cell-label bus-map-cell-label--neutral">CITY PARKING 城市車旅停車場（萬芳醫院站）</p>
+                            <div class="embed-map-ratio">
+                                <iframe title="Google 地圖：CITY PARKING 城市車旅停車場萬芳醫院站" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps?q=CITY+PARKING+%E5%9F%8E%E5%B8%82%E8%BB%8A%E6%97%85+%E8%90%AC%E8%8A%B3%E9%86%AB%E9%99%A2%E7%AB%99&amp;hl=zh-TW&amp;z=17&amp;output=embed"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- 區塊五：宿舍（弘道樓、新民樓地圖與說明） -->
+        <section id="transactions" class="content-section" style="display:none;">
+            <div class="dorm-gallery">
+                <h2 class="dorm-heading">🏢 校內宿舍資訊</h2>
+                <p class="dorm-intro">中國科技大學台北校區內兩棟宿舍建築「弘道樓」與「新民樓」。</p>
+
+                <article class="dorm-card">
+                    <h3>弘道樓（校內宿舍區）</h3>
+                    <p>弘道樓位於中國科技大學校區內，為學生住宿與生活動線的重要建築之一，周邊可銜接校內主要教學與通行路線。</p>
+                    <div class="dorm-map-wrap">
+                        <div class="embed-map-ratio">
+                            <iframe title="Google 地圖：中國科技大學 弘道樓" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps?q=24.9991964%2C121.5546145&amp;hl=zh-TW&amp;z=19&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+                    <a class="dorm-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9991964%2C121.5546145" target="_blank" rel="noopener noreferrer">Google 地圖開啟弘道樓</a>
+                    <div class="dorm-photos">
+                        <img src="images/女宿1.jpg" alt="弘道樓宿舍照片 1" width="400" height="400">
+                        <img src="images/女宿2.jpg" alt="弘道樓宿舍照片 2" width="400" height="400">
+                    </div>
+                </article>
+
+                <article class="dorm-card">
+                    <h3>新民樓（校內宿舍區）</h3>
+                    <p>新民樓同屬中國科技大學校區內宿舍建築，為去年底完工的新宿舍，鄰近校內步行動線，提供學生住宿空間與日常生活機能。</p>
+                    <div class="dorm-map-wrap">
+                        <div class="embed-map-ratio">
+                            <iframe title="Google 地圖：中國科技大學 新民樓" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps?q=24.9985457%2C121.5553216&amp;hl=zh-TW&amp;z=19&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+                    <a class="dorm-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=24.9985457%2C121.5553216" target="_blank" rel="noopener noreferrer">Google 地圖開啟新民樓</a>
+                    <div class="dorm-photos">
+                        <img src="images/男宿1.jpg" alt="新民樓宿舍照片 1" width="300" height="300">
+                        <img src="images/男宿2.jpg" alt="新民樓宿舍照片 2" width="300" height="300">
+                        <img src="images/男宿4.jpg" alt="新民樓宿舍照片 3" width="300" height="300">
+                    </div>
+                </article>
+
+                <h2 class="dorm-heading">🏠 校外宿舍資訊</h2>
+                <p class="dorm-intro">以下整理中國科技大學台北校區周邊可參考的校外住宿方向，建議以學校公告與實際看屋資訊為準。</p>
+
+                <article class="dorm-card">
+                    <h3>台北校區周邊（文山區／興隆路、萬芳醫院站一帶）</h3>
+                    <p>依租屋平台近期刊登資訊，學生套房常見月租約 NT$8,500～NT$11,000，房型多為 3～6 坪。部分物件可申請租屋補助，步行或公車可接萬芳醫院站與校區。</p>
+                    <ul class="dorm-list">
+                        <li><strong>建議優先看：</strong>到校步行 10～20 分鐘內、是否獨立衛浴、是否含網路與公共洗衣設備。</li>
+                        <li><strong>常見生活機能：</strong>便利商店、超市與餐飲密集，日常採買方便。</li>
+                        <li><strong>參考平台：</strong><a href="https://tw.mixrent.com/search.php?q=%E5%8F%B0%E5%8C%97%E4%B8%AD%E5%9C%8B%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener noreferrer">MixRent 台北中國科大租屋</a>、<a href="https://www.zuyou.com.tw/houses/xinglong-220-lab" target="_blank" rel="noopener noreferrer">Zuyou 興隆路租屋案例</a></li>
+                    </ul>
+                </article>
+
+                <article class="dorm-card">
+                    <h3>近期租屋案例（台北校區周邊）</h3>
+                    <p>以下為公開平台可查到的近期案例整理，先列重點條件方便快速比較；實際租金與空房狀態請以最新刊登為準。</p>
+                    <ul class="dorm-list">
+                        <li><strong>案例 A｜興隆 220 實驗室：</strong>月租約 NT$9,000～NT$11,000，約 3.3～5.4 坪，步行到中國科技大學台北校區約 15 分鐘。</li>
+                        <li><strong>案例 B｜萬芳醫院站全新裝潢套房：</strong>月租約 NT$16,500，約 5 坪，主打獨立洗脫烘與含部分管理項目。</li>
+                    </ul>
+                    <div class="dorm-source-links">
+                        <span><strong>查看來源：</strong></span>
+                        <a href="https://www.zuyou.com.tw/houses/xinglong-220-lab" target="_blank" rel="noopener noreferrer">案例 A</a>
+                        <a href="https://rent.591.com.tw/21088036" target="_blank" rel="noopener noreferrer">案例 B</a>
+                    </div>
+                </article>
+
+                <article class="dorm-card">
+                    <h3>台北校區看屋與簽約檢查清單（建議）</h3>
+                    <ul class="dorm-list">
+                        <li>現場確認水電計費方式（台電／房東另計）與押金、違約條款。</li>
+                        <li>確認公共空間維護、垃圾處理方式與門禁安全。</li>
+                        <li>簽約前拍照留存設備現況，並核對租賃契約版本。</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾：版權與說明 -->
+    <footer class="site-footer">
+        <p>中國科技大學｜校園生活指引</p>
+    </footer>
+
+    <script>
+        /*
+         * 頁面互動腳本（用途一眼看懂版）
+         * 1) 初始化本地圖片路徑與載入失敗時的替代圖
+         * 2) 控制功能區塊切換（餐廳/捷運/公車/停車/宿舍）
+         * 3) 餐廳分類篩選與數量統計
+         */
+
+        /* 常用 DOM 小工具：統一查找方式，避免重複寫 querySelector。 */
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+
+        function $$(selector) {
+            return Array.prototype.slice.call(document.querySelectorAll(selector));
+        }
+
+        /* 初始化本地圖片：處理中文檔名編碼 + 缺圖時顯示提示圖。 */
+        function initLocalImages() {
+            var placeholderSvg =
+                '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240">' +
+                '<rect fill="#e2e8f0" width="400" height="240"/>' +
+                '<text x="50%" y="46%" dominant-baseline="middle" text-anchor="middle" fill="#475569" font-family="system-ui,sans-serif" font-size="13">無法載入圖片</text>' +
+                '<text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#64748b" font-family="system-ui,sans-serif" font-size="11">請將圖檔放在與本頁同層的 images 資料夾，檔名需與網頁指定一致</text>' +
+                "</svg>";
+            var placeholder = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(placeholderSvg);
+
+            function encodeLocalPath(src) {
+                if (!src || src.indexOf("images/") !== 0) return src;
+                var parts = src.split("/");
+                var filename = parts.pop();
+                parts.push(encodeURIComponent(filename));
+                return parts.join("/");
+            }
+
+            $$('img[src^="images/"]').forEach(function (img) {
+                img.src = encodeLocalPath(img.getAttribute("src"));
+                img.addEventListener(
+                    "error",
+                    function onImageError() {
+                        img.removeEventListener("error", onImageError);
+                        img.src = placeholder;
+                        img.decoding = "async";
+                    },
+                    { once: true }
+                );
+            });
+        }
+
+        /*
+         * 區塊切換控制：
+         * - 先隱藏所有 content-section
+         * - 顯示指定 section 並捲動到該區
+         * - 同步頂部下拉選單 value
+         */
+        function showSection(sectionId) {
+            $$(".content-section").forEach(function (section) {
+                section.style.display = "none";
+            });
+
+            var target = document.getElementById(sectionId);
+            if (!target) return;
+
+            target.style.display = "block";
+            target.scrollIntoView({ behavior: "smooth" });
+
+            var sectionSelect = $("#section-select");
+            if (sectionSelect) {
+                sectionSelect.value = sectionId;
+            }
+        }
+
+        /*
+         * 餐廳分類器：
+         * - 切換按鈕 active 樣式
+         * - 依分類顯示/隱藏卡片
+         * - 更新「目前共有 X 間」提示文字
+         */
+        function filterCategory(category, btn) {
+            var categoryLabels = {
+                all: "全部",
+                breakfast: "早餐",
+                lunch: "正餐",
+                drink: "飲料"
+            };
+
+            $$(".cat-btn").forEach(function (button) {
+                button.classList.remove("active");
+            });
+            if (btn) btn.classList.add("active");
+
+            var count = 0;
+            $$(".card-link").forEach(function (card) {
+                var isVisible = category === "all" || card.classList.contains(category);
+                card.style.display = isVisible ? "" : "none";
+                if (isVisible) count++;
+            });
+
+            var counter = $("#category-count");
+            if (counter) {
+                counter.textContent = "目前共有 " + count + " 間「" + (categoryLabels[category] || "全部") + "」餐廳";
+            }
+        }
+
+        /* 首次載入流程：圖片初始化 -> 綁定區塊切換 -> 顯示預設區塊與分類。 */
+        document.addEventListener("DOMContentLoaded", function () {
+            initLocalImages();
+
+            var sectionSelect = $("#section-select");
+            if (sectionSelect) {
+                sectionSelect.addEventListener("change", function () {
+                    showSection(sectionSelect.value);
+                });
+            }
+
+            showSection("home");
+            var defaultCategoryBtn = $("#restaurant-info .cat-btn.active");
+            if (defaultCategoryBtn) {
+                filterCategory("all", defaultCategoryBtn);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
